@@ -238,7 +238,7 @@ class App extends Component {
     },2000);
   }
 ```
-Now we can use `this.state.movies` instead of just `movies` variable when renders
+Now we can use `this.state.movies` instead of just `movies` variable when renders.
 ```javascript
     render() {
       return (
@@ -249,5 +249,8 @@ Now we can use `this.state.movies` instead of just `movies` variable when render
         </div>
     );
   }
-
 ```
+
+## Loading State
+To simulate using API which data is supposed to save to state,
+
