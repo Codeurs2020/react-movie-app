@@ -1,18 +1,20 @@
 # React Movie App
- A simple react project for studying.
+ A simple React project for studying.
 
-Project exapmes are from Nomad Coder's
+Project examples are from Nomad Coder's
 
 # Summary
 
 ## Install and init
-Set the Project with `create-react-app` (a.k.a CRA)
+Set the project with `create-react-app` (a.k.a CRA)
 
-`npx create-react-app movie-app`
+```
+npx create-react-app movie-app
+```
 
 Remove unuse things except following code in `App.js` file
 
-`App.js` :
+App.js :
 ```javascript
 import React, { Component } from 'react';
 
@@ -113,14 +115,17 @@ But `React.propTypes` is deprecated after React 16
 
 So, you need to install prop-types package
 
-` > npm i prop-types -save`
+```
+npm i prop-types -save
+```
 
+package.json :
 ```json
  "dependencies": {
     "prop-types": "^15.6.2"
   }
 ```
-
+Movie.jsx :
 ```javascript
 import PropTypes from 'prop-types'; // add package
 
@@ -144,3 +149,105 @@ class Movie extends Component {
 }
 ```
 
+## Component LifeCycle
+will mount -> render -> did mount
+
+But, `componentWillMount` are deprecate React v16.3
+
+New LifeCycle :
+
+`getDerivedStateFromProps` -> `render` -> `componentDidMount`
+
+```javascript
+class App extends Component {
+  state = {
+    greeting: 'Hello!'
+  }
+  componentWillMount() { // deprecated v16.3
+    console.log('will mount');
+
+  }
+  componentDidMount() {
+    console.log('did mount');
+  }
+
+  render() {
+    console.log('did rendered');
+    return (
+      <div className="App">
+      {this.state.greeting}
+        {movies.map((movie, index) => {
+          return <Movie title={movie.title} poster={movie.poster} key={index}/>
+        })}
+      </div>
+    );
+  }
+}
+```
+
+Console print :
+
+will mount
+
+did rendered
+
+did mount
+
+
+
+## Component State
+Only when `getDerivedStateFromProps`, you can change state even if you don't call `setState`
+
+
+## Practice setState
+Let's change the state objects with adding the new item to movies array after 2 seconds.
+
+Make `movies` value state object's element.
+
+Modify `componentDidMount` function with `setState` and `setTimeout`.
+
+
+```javascript
+class App extends Component {
+  state = {
+    greeting: 'Hello!',
+    movies : [
+      {
+        title : "Matrix",
+        poster: "https://posterimage_blah_blah"
+      },
+      {
+        title : "Star Wars",
+        poster: "https://posterimage_blah_blah2"
+      }
+    ]
+  }
+
+  // New movie item will be add after 2000s
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        movies: [
+          ...this.state.movies, // This is Spread Syntax meaning all items of movies array
+          {
+            title: 'Coco',
+            poster: 'https://coco-movie-poster.jpg'
+          }
+        ]
+      })
+    },2000);
+  }
+```
+Now we can use `this.state.movies` instead of just `movies` variable when renders
+```javascript
+    render() {
+      return (
+        <div className="App">
+          {this.state.movies.map((movie, index) => {
+            return <Movie title={movie.title} poster={movie.poster} key={index}/>
+          })}
+        </div>
+    );
+  }
+
+```
