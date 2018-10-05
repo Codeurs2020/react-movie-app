@@ -252,5 +252,76 @@ Now we can use `this.state.movies` instead of just `movies` variable when render
 ```
 
 ## Loading State
-To simulate using API which data is supposed to save to state,
+To simulate using API which data is supposed to save to state
 
+## Smart vs Dumb
+"Smart" components have state.
+
+"Dumb" components don't have state, only have props.
+
+`Class` which has states and `Function` has only props.
+
+But what `Function` does is as same as `Class` does.
+
+Both return html code.
+
+The `Function` has an advantage that code is more concise,
+but it is impossible updating state or other things like that.
+
+- Class component which has state and props
+```javascript
+// smart component
+class MoviePoster extends Component {
+    render() {
+        return (
+            <img src={this.props.poster} />
+        )
+    }
+}
+```
+- Function component which has only props
+```javascript
+// dumb component
+function MoviePoster({ poster }){
+    return (
+        <img src={poster} />
+    )
+}
+```
+
+Let's change the Class component code to Function component code.
+
+```javascript
+class Movie extends Component {
+
+    static propTypes = {
+        title: PropTypes.string.isRequired,
+        poster: PropTypes.string.isRequired
+    }
+
+    render() {
+        return (
+            <div>
+                <h1> {this.props.title} </h1>
+                <MoviePoster poster={this.props.poster}/>
+            </div>
+        )
+    }
+}
+```
+to
+```javascript
+function Movie ({title, poster}){
+    return (
+            <div>
+                <h1> {title} </h1>
+                <MoviePoster poster={poster}/>
+            </div>
+        )
+}
+
+Movie.propTypes = {
+    title: PropTypes.string.isRequired,
+    poster: PropTypes.string.isRequired
+}
+```
