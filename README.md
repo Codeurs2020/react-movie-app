@@ -325,3 +325,10 @@ Movie.propTypes = {
     poster: PropTypes.string.isRequired
 }
 ```
+
+## AJAX on React
+
+`fetch` means to chatch something
+
+
+
